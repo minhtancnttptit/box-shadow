@@ -30,6 +30,12 @@ class CardSession extends React.Component {
     this.props.onSwapLayer(result, selected);
   }
 
+  onRemoveLayer = (id) => {
+    if (this.state.list.length > 1) {
+      this.props.onRemoveLayer(id);
+    }
+  }
+
   render() {
     return (
       <div className="card-session ui segment container">
@@ -46,6 +52,9 @@ class CardSession extends React.Component {
                 style={item.id === this.props.selectedLayer ? {background: 'pink'} : null}
               >
                 {App.getCssLayer(item.value)}
+              </button>
+              <button className="removeLayer" onClick={() => this.onRemoveLayer(item.id)}>
+                Delete
               </button>
             </div>
           ))}

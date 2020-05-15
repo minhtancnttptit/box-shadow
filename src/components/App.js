@@ -86,6 +86,14 @@ class App extends React.Component {
     }
   }
 
+  onRemoveLayer = (id) => {
+    let currentState = {...this.state};
+    currentState.css.splice(id, 1);
+    if (currentState.selectedLayer !== 0)
+      currentState.selectedLayer--;
+    this.setState(currentState);
+  }
+
   render() {
     return (
       <div className="ui container">
@@ -93,13 +101,14 @@ class App extends React.Component {
           onChangeValue={this.onChangeValue}
           onChangeCheckBox={this.onChangeCheckBox}
           onShadowColorChange={this.onShadowColorChange}
-          values={this.state.css[this.state.selectedLayer]} />
-        <CssCodeBox cssCode={App.getCssCode(this.state.css)}
+          values={this.state.css[this.state.selectedLayer]}
         />
+        <CssCodeBox cssCode={App.getCssCode(this.state.css)} />
         <CardSession
           onClickAddLayer={this.onClickAddLayer}
           onClickLayer={this.onClickLayer}
           onSwapLayer={this.onSwapLayer}
+          onRemoveLayer={this.onRemoveLayer}
           selectedLayer={this.state.selectedLayer}
           css={this.state.css}
         />
