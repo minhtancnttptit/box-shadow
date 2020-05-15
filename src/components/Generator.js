@@ -9,7 +9,7 @@ class Generator extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps !== undefined) {
       console.log(nextProps.values);
-      
+
       return nextProps.values;
     }
     return {};
