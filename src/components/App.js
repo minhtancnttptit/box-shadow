@@ -21,7 +21,8 @@ class App extends React.Component {
     css: [DEFAULT_CSS],
     selectedLayer: 0
   };
-
+  
+  static getDerived
 
 
   componentDidMount() {
@@ -51,6 +52,8 @@ class App extends React.Component {
   }
 
   onChangeValue = (name, value) => {
+    console.log(name, value);
+    
     let currentState = this.state;
     currentState.css[this.state.selectedLayer][name] = value;
     this.setState(currentState);

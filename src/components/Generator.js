@@ -3,42 +3,31 @@ import RangeSlider from "./RangeSlider";
 import { SketchPicker } from 'react-color';
 
 
-class Generator extends React.Component {
-  state = {};
+const Generator = (props) => {
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps !== undefined) {
-      return nextProps.values;
-    }
-    return {};
+  const onChangeCheckBox = (event) => {
+    props.onChangeCheckBox(event.target.checked);
   }
 
-  onChangeCheckBox = (event) => {
-    this.props.onChangeCheckBox(event.target.checked);
-    this.setState({ inset: event.target.checked });
-  }
-
-  render() {
-    return (
-      <div className="ui segment">
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 2fr)", gridGap: 20 }}>
-          <div>
-            <h2>Box-Shadow CSS Generator</h2>
-            <RangeSlider name="shiftRight" min={-50} max={50} value={this.state.shiftRight} onChange={this.props.onChangeValue} />
-            <RangeSlider name="shiftDown" min={-50} max={50} value={this.state.shiftDown} onChange={this.props.onChangeValue} />
-            <RangeSlider name="spread" min={0} max={100} value={this.state.spread} onChange={this.props.onChangeValue} />
-            <RangeSlider name="blur" min={0} max={100} value={this.state.blur} onChange={this.props.onChangeValue} />
-            <RangeSlider name="opacity" min={0} max={100} value={this.state.opacity} onChange={this.props.onChangeValue} />
-            <input type="checkbox" checked={this.state.inset} onChange={(event) => this.onChangeCheckBox(event)} />
-            <label>Inset</label>
-          </div>
-          <div>
-            <SketchPicker color="ff0000" onChangeComplete={(color) => { this.props.onShadowColorChange(color) }} />
-          </div>
+  return (
+    <div className="ui segment">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 2fr)", gridGap: 20 }}>
+        <div>
+          <h2>Box-Shadow CSS Generator</h2>
+          <RangeSlider name="shiftRight" min={-50} max={50} value={props.values.shiftRight} onChange={props.onChangeValue} />
+          <RangeSlider name="shiftDown" min={-50} max={50} value={props.values.shiftDown} onChange={props.onChangeValue} />
+          <RangeSlider name="spread" min={0} max={100} value={props.values.spread} onChange={props.onChangeValue} />
+          <RangeSlider name="blur" min={0} max={100} value={props.values.blur} onChange={props.onChangeValue} />
+          <RangeSlider name="opacity" min={0} max={100} value={props.values.opacity} onChange={props.onChangeValue} />
+          <input type="checkbox" checked={props.values.inset} onChange={(event) => onChangeCheckBox(event)} />
+          <label>Inset</label>
+        </div>
+        <div>
+          <SketchPicker color="ff0000" onChangeComplete={(color) => {props.onShadowColorChange(color) }} />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Generator;
