@@ -30,20 +30,24 @@ class App extends React.Component {
     });
   }
 
-  getCssCode = () => {
-    return this.getListLayer().join(', ');
+  static getCssCode = (css) => {
+    return this.getListLayer(css).join(', ');
   }
 
-  getListLayer = () => {
+  static getListLayer = (css) => {
     let listLayer = [];
-    for (let layer of this.state.css) {
-      let { red, green, blue, shiftRight, shiftDown, spread, blur, opacity, inset } = layer,
-        result = `rgba(${red}, ${green}, ${blue}, ${opacity / 100}) ${shiftRight}px ${shiftDown}px ${blur}px ${spread}px`;
-      if (inset === true)
-        result += ' inset';
-      listLayer.push(result);
+    for (let layer of css) {
+      listLayer.push(App.getCssLayer(layer));
     }
     return listLayer;
+  }
+
+  static getCssLayer = (layer) => {
+    let { red, green, blue, shiftRight, shiftDown, spread, blur, opacity, inset } = layer,
+    result = `rgba(${red}, ${green}, ${blue}, ${opacity / 100}) ${shiftRight}px ${shiftDown}px ${blur}px ${spread}px`;
+    if (inset === true)
+    result += ' inset';
+    return result;
   }
 
   onChangeValue = (name, value) => {
@@ -76,6 +80,12 @@ class App extends React.Component {
     this.setState({ selectedLayer: id });
   }
 
+  onSwapLayer = (css, selected) => {
+    if (css !== undefined) {
+      this.setState({'css': css, selectedLayer: selected})
+    }
+  }
+
   render() {
     return (
       <div className="ui container">
@@ -84,15 +94,16 @@ class App extends React.Component {
           onChangeCheckBox={this.onChangeCheckBox}
           onShadowColorChange={this.onShadowColorChange}
           values={this.state.css[this.state.selectedLayer]} />
-        <CssCodeBox cssCode={this.getCssCode()}
+        <CssCodeBox cssCode={App.getCssCode(this.state.css)}
         />
         <CardSession
           onClickAddLayer={this.onClickAddLayer}
           onClickLayer={this.onClickLayer}
+          onSwapLayer={this.onSwapLayer}
           selectedLayer={this.state.selectedLayer}
-          listLayer={this.getListLayer()}
+          css={this.state.css}
         />
-        <PreviewBox boxShadowCss={this.getCssCode()} />
+        <PreviewBox boxShadowCss={App.getCssCode(this.state.css)} />
       </div>
     );
   }
