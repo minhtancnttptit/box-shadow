@@ -10,7 +10,12 @@ class CardSession extends React.Component {
         return (
           <div className={"layer" + index} key={index}>
             <li className="layer-layer" key={index}>
-
+              <button
+                  id={index}
+                  onClick={event => {nextProps.onClickLayer(parseInt(event.target.id))}}
+                  style={index === nextProps.selectedLayer ? {backgroundColor: "#b5cc18"} : null}>
+                    {layer}
+                </button>
             </li>
           </div>
         );
