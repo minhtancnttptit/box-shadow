@@ -16,7 +16,7 @@ class PreviewBox extends React.Component {
   }
 
   render() {
-    const { boxShadowCss, background } = this.state;
+    const { boxShadowCss, background } = this.state
     return (
       <>
         <style jsx={"true"}>
@@ -38,12 +38,12 @@ class PreviewBox extends React.Component {
               <div className="preview-box abc" />
             </div>
             <div>
-              <SketchPicker color="ff0000" onChangeComplete={({ hex }) => this.handleChangeComplete(hex)} />
+              <SketchPicker color={this.state.background} onChange={({ hex }) => this.handleChangeComplete(hex)} />
             </div>
           </div>
         </div>
       </>
-    );
+    )
   }
 }
 

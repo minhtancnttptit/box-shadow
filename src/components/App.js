@@ -3,6 +3,7 @@ import Generator from "./Generator";
 import CssCodeBox from "./CssCodeBox";
 import PreviewBox from "./PreviewBox";
 import CardSession from "./CardSession";
+import Template from "./Template";
 
 const DEFAULT_CSS = {
   red: 0,
@@ -18,19 +19,11 @@ const DEFAULT_CSS = {
 
 class App extends React.Component {
   state = {
-    css: [DEFAULT_CSS],
-    selectedLayer: 0
+    css: [{...DEFAULT_CSS}],
+    selectedLayer: 0,
+    reverseTemplate: false
   };
   
-  static getDerived
-
-
-  componentDidMount() {
-    this.setState({
-      css: [{ ...DEFAULT_CSS }]
-    });
-  }
-
   static getCssCode = (css) => {
     return this.getListLayer(css).join(', ');
   }
@@ -52,8 +45,6 @@ class App extends React.Component {
   }
 
   onChangeValue = (name, value) => {
-    console.log(name, value);
-    
     let currentState = this.state;
     currentState.css[this.state.selectedLayer][name] = value;
     this.setState(currentState);
@@ -67,7 +58,7 @@ class App extends React.Component {
 
   onClickAddLayer = () => {
     let currentState = this.state;
-    currentState.css.push({ ...DEFAULT_CSS });
+    currentState.css.push({...DEFAULT_CSS});
     this.setState(currentState);
   }
 
@@ -97,6 +88,16 @@ class App extends React.Component {
     this.setState(currentState);
   }
 
+  onclickTemplate = (css) => {
+    console.log('tem');
+    this.setState({css: css, reverseTemplate: !this.state.reverseTemplate})
+  }
+
+  getColorShadow = () => {
+    let {red, green, blue} = this.state.css[this.state.selectedLayer];
+    return {r: red, g: green, b: blue};
+  }
+
   render() {
     return (
       <div className="ui container">
@@ -105,7 +106,9 @@ class App extends React.Component {
           onChangeCheckBox={this.onChangeCheckBox}
           onShadowColorChange={this.onShadowColorChange}
           values={this.state.css[this.state.selectedLayer]}
+          color={this.getColorShadow()}
         />
+
         <CssCodeBox cssCode={App.getCssCode(this.state.css)} />
         <CardSession
           onClickAddLayer={this.onClickAddLayer}
@@ -115,6 +118,7 @@ class App extends React.Component {
           selectedLayer={this.state.selectedLayer}
           css={this.state.css}
         />
+        <Template reverse={this.state.reverseTemplate} onClickTemplate={this.onclickTemplate} />
         <PreviewBox boxShadowCss={App.getCssCode(this.state.css)} />
       </div>
     );

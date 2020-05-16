@@ -1,6 +1,6 @@
 import React from "react";
 import RangeSlider from "./RangeSlider";
-import { SketchPicker } from 'react-color';
+import ChooseColorShadow from "./ChooseColorShadow";
 
 
 const Generator = (props) => {
@@ -8,6 +8,7 @@ const Generator = (props) => {
   const onChangeCheckBox = (event) => {
     props.onChangeCheckBox(event.target.checked);
   }
+
 
   return (
     <div className="ui segment">
@@ -23,9 +24,9 @@ const Generator = (props) => {
           <label>Inset</label>
         </div>
         <div>
-          <SketchPicker color="ff0000" onChangeComplete={(color) => {props.onShadowColorChange(color) }} />
+          <ChooseColorShadow color={props.color} onShadowColorChange={props.onShadowColorChange}/>
         </div>
-      </div>
+     </div>
     </div>
   )
 }
